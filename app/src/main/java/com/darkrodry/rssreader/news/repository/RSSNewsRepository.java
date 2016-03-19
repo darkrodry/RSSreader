@@ -1,20 +1,44 @@
 package com.darkrodry.rssreader.news.repository;
 
 import com.darkrodry.rssreader.news.model.NewsItem;
+import com.einmalfel.earl.EarlParser;
+import com.einmalfel.earl.Feed;
+import com.einmalfel.earl.Item;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 public class RSSNewsRepository implements NewsRepository {
     
     @Override
     public List<NewsItem> getNewsItems() {
+
         ArrayList<NewsItem> newsItemsList = new ArrayList<>();
 
-        newsItemsList.add(new NewsItem("Fake data 1", "Fake description 1", "link", "link"));
-        newsItemsList.add(new NewsItem("Fake data 2", "Fake description 2", "link", "link"));
-        newsItemsList.add(new NewsItem("Fake data 3", "Fake description 3", "link", "link"));
-        newsItemsList.add(new NewsItem("Fake data 4", "Fake description 4", "link", "link"));
+        try {
+            InputStream inputStream = new URL("http://www.xatakandroid.com/tag/feeds/rss2.xml").openConnection().getInputStream();
+
+            Feed feed = EarlParser.parseOrThrow(inputStream, 0);
+            for (Item item : feed.getItems()) {
+                newsItemsList.add(new NewsItem(item.getTitle(),
+                        item.getDescription(),
+                        item.getImageLink(),
+                        item.getLink()));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DataFormatException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
         
         return newsItemsList;
     }

@@ -1,5 +1,6 @@
 package com.darkrodry.rssreader.newsviewer.ui;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.darkrodry.rssreader.news.model.NewsItem;
 import com.darkrodry.rssreader.news.repository.RSSNewsRepository;
 import com.darkrodry.rssreader.newsviewer.interactor.GetNewsImpl;
 import com.darkrodry.rssreader.newsviewer.presenter.NewsListPresenter;
+import com.darkrodry.rssreader.utils.concurrent.MainThreadImpl;
 
 import java.util.List;
 
@@ -26,7 +28,8 @@ public class NewsActivityFragment extends Fragment implements NewsListPresenter.
     private NewsListAdapter newsListAdapter;
 
     public NewsActivityFragment() {
-        presenter = new NewsListPresenter(this, new GetNewsImpl(new RSSNewsRepository()));
+        presenter = new NewsListPresenter(this,
+                new GetNewsImpl(new RSSNewsRepository(), new MainThreadImpl(new Handler())));
     }
 
     @Override
