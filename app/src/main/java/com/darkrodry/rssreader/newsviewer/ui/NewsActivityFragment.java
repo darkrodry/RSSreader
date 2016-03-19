@@ -1,8 +1,8 @@
 package com.darkrodry.rssreader.newsviewer.ui;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +50,9 @@ public class NewsActivityFragment extends Fragment implements NewsListPresenter.
 
     @Override
     public void initListAdapter(List<NewsItem> newsItems) {
-        newsListAdapter = new NewsListAdapter(LayoutInflater.from(this.getContext()), newsItems);
+        newsListAdapter = new NewsListAdapter(LayoutInflater.from(this.getContext()),
+                newsItems,
+                this.getContext());
         newsListView.setAdapter(newsListAdapter);
     }
 }

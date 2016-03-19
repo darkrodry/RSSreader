@@ -1,7 +1,6 @@
 package com.darkrodry.rssreader.newsviewer.presenter;
 
 import com.darkrodry.rssreader.news.model.NewsItem;
-import com.darkrodry.rssreader.news.repository.RSSNewsRepository;
 import com.darkrodry.rssreader.newsviewer.interactor.GetNews;
 
 import java.util.List;

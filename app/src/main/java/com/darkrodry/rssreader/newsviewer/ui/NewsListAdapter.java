@@ -1,5 +1,6 @@
 package com.darkrodry.rssreader.newsviewer.ui;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.darkrodry.rssreader.R;
 import com.darkrodry.rssreader.news.model.NewsItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,10 +25,14 @@ public class NewsListAdapter extends BaseAdapter {
 
     private List<NewsItem> newsItemList;
     private LayoutInflater inflater;
+    private Context context;
 
-    public NewsListAdapter(LayoutInflater inflater, List<NewsItem> newsItemList) {
+    public NewsListAdapter(LayoutInflater inflater,
+                           List<NewsItem> newsItemList,
+                           Context context) {
         this.inflater = inflater;
         this.newsItemList = newsItemList;
+        this.context = context;
     }
 
     @Override
@@ -55,10 +62,11 @@ public class NewsListAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
 
-            convertView = inflater.inflate(android.R.layout.simple_list_item_2, null);
+            convertView = inflater.inflate(R.layout.listview_news_item, null);
 
-            holder.title = (TextView) convertView.findViewById(android.R.id.text1);
-            holder.description = (TextView) convertView.findViewById(android.R.id.text2);
+            holder.title = (TextView) convertView.findViewById(R.id.textview_title);
+            holder.description = (TextView) convertView.findViewById(R.id.textview_content);
+            holder.image = (ImageView) convertView.findViewById(R.id.imageview_image);
 
             convertView.setTag(holder);
         } else {
@@ -68,6 +76,9 @@ public class NewsListAdapter extends BaseAdapter {
         NewsItem item = newsItemList.get(position);
         holder.title.setText(item.getTitle());
         holder.description.setText(item.getContent());
+        Picasso.with(context).load(item.getImgUrl())
+                .centerCrop()
+                .into(holder.image);
 
         return convertView;
     }
