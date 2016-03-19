@@ -1,5 +1,7 @@
 package com.darkrodry.rssreader.newsviewer.presenter;
 
+import android.net.Uri;
+
 import com.darkrodry.rssreader.news.model.NewsItem;
 
 public class NewsDetailPresenter {
@@ -14,10 +16,15 @@ public class NewsDetailPresenter {
     public void onInit() {
         view.setContent(newsItem.getContent());
         view.setTitle(newsItem.getTitle());
+        view.setImage(newsItem.getImgUrl());
     }
 
     public void setNewsItem(NewsItem newsItem) {
         this.newsItem = newsItem;
+    }
+
+    public void onClickShowInBrowserButton() {
+        view.launchViewUrlIntent(Uri.parse(newsItem.getLink()));
     }
 
     public interface View {
@@ -27,5 +34,7 @@ public class NewsDetailPresenter {
         void setTitle(String title);
 
         void setImage(String imageUrl);
+
+        void launchViewUrlIntent(Uri url);
     }
 }
