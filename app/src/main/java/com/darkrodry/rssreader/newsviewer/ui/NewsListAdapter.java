@@ -1,7 +1,6 @@
 package com.darkrodry.rssreader.newsviewer.ui;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +54,6 @@ public class NewsListAdapter extends BaseAdapter {
 
         ViewHolder holder;
 
-        Log.d("check View", "in getView for position " + position + ", convertView is "
-                + ((convertView == null) ? "null" : "being recycled"));
-
         if (convertView == null) {
 
             holder = new ViewHolder();
@@ -75,9 +71,8 @@ public class NewsListAdapter extends BaseAdapter {
 
         NewsItem item = newsItemList.get(position);
         holder.title.setText(item.getTitle());
-        holder.description.setText(item.getContent());
+        holder.description.setText(item.getImgUrl());
         Picasso.with(context).load(item.getImgUrl())
-                .centerCrop()
                 .into(holder.image);
 
         return convertView;
