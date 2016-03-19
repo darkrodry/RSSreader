@@ -12,8 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".newsviewer.NewsActivity"
-            android:label="@string/title_activity_news"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_news">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

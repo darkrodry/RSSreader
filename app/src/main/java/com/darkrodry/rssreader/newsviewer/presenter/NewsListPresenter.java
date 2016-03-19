@@ -20,14 +20,21 @@ public class NewsListPresenter {
         getNews.execute(new GetNews.Callback() {
             @Override
             public void onNewsReceived(List<NewsItem> newsItems) {
+                newsItemList = newsItems;
                 view.initListAdapter(newsItems);
             }
         });
     }
 
+    public void onNewsListItemClick(int position) {
+        view.createDetailView(newsItemList.get(position));
+    }
+
     public interface View {
 
         void initListAdapter(List<NewsItem> newsItems);
+
+        void createDetailView(NewsItem newsItem);
 
     }
 }

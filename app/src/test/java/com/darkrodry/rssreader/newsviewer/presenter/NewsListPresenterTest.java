@@ -2,7 +2,7 @@ package com.darkrodry.rssreader.newsviewer.presenter;
 
 import com.darkrodry.rssreader.BaseUnitTest;
 import com.darkrodry.rssreader.newsviewer.interactor.GetNews;
-import com.darkrodry.rssreader.newsviewer.ui.NewsActivityFragment;
+import com.darkrodry.rssreader.newsviewer.ui.NewsListFragment;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 public class NewsListPresenterTest extends BaseUnitTest {
 
     @Mock
-    NewsActivityFragment viewMock;
+    NewsListFragment viewMock;
     @Mock
     GetNews getNewsMock;
 
