@@ -9,9 +9,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class NewsListPresenterTest extends BaseUnitTest {
+
+    private static final String ANY_URL = "any_url";
 
     @Mock
     NewsListFragment viewMock;
@@ -27,9 +31,10 @@ public class NewsListPresenterTest extends BaseUnitTest {
 
     @Test
     public void testOnInit() throws Exception {
+        when(viewMock.getFeedUrlPreference()).thenReturn(ANY_URL);
         newsListPresenter.onInit();
 
-        verify(getNewsMock).execute(any(GetNews.Callback.class));
+        verify(getNewsMock).execute(any(GetNews.Callback.class), eq(ANY_URL));
     }
 
 }

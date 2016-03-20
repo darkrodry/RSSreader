@@ -15,6 +15,8 @@ import static org.mockito.Mockito.verify;
 
 public class GetNewsImplTest extends BaseUnitTest {
 
+    private static final String ANY_URL = "any_url";
+
     private GetNewsImpl getNews;
 
     @Mock
@@ -32,7 +34,7 @@ public class GetNewsImplTest extends BaseUnitTest {
 
     @Test
     public void testExecute() throws Exception {
-        getNews.execute(callbackMock);
+        getNews.execute(callbackMock, ANY_URL);
 
         verify(repositoryMock).getNewsItems();
         verify(callbackMock).onNewsReceived(anyListOf(NewsItem.class));
