@@ -17,17 +17,33 @@ public class NewsListPresenter {
     }
 
     public void onInit() {
+        refreshNews();
+    }
+
+    private String getFeedUrl(){
+        return view.getFeedUrlPreference();
+    }
+
+    public void onNewsListItemClick(int position) {
+        view.createDetailView(newsItemList.get(position));
+    }
+
+    public void onClickSettingsButton() {
+        view.launchSettingsActivity();
+    }
+
+    public void onClickRefreshButton() {
+        refreshNews();
+    }
+
+    private void refreshNews() {
         getNews.execute(new GetNews.Callback() {
             @Override
             public void onNewsReceived(List<NewsItem> newsItems) {
                 newsItemList = newsItems;
                 view.initListAdapter(newsItems);
             }
-        });
-    }
-
-    public void onNewsListItemClick(int position) {
-        view.createDetailView(newsItemList.get(position));
+        }, getFeedUrl());
     }
 
     public interface View {
@@ -36,5 +52,8 @@ public class NewsListPresenter {
 
         void createDetailView(NewsItem newsItem);
 
+        void launchSettingsActivity();
+
+        String getFeedUrlPreference();
     }
 }

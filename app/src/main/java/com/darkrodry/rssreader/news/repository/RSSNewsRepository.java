@@ -17,13 +17,19 @@ import java.util.List;
 import java.util.zip.DataFormatException;
 
 public class RSSNewsRepository implements NewsRepository {
+
+    private String url;
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
     
     @Override
     public List<NewsItem> getNewsItems() {
         ArrayList<NewsItem> newsItemsList = new ArrayList<>();
 
         try {
-            InputStream inputStream = new URL("http://feeds.weblogssl.com/xataka2").openConnection().getInputStream();
+            InputStream inputStream = new URL(url).openConnection().getInputStream();
 
             Feed feed = EarlParser.parseOrThrow(inputStream, 0);
             for (Item item : feed.getItems()) {

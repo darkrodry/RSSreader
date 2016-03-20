@@ -38,9 +38,11 @@ public class NewsDetailFragment extends Fragment implements NewsDetailPresenter.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_newsdetail, container, false);
+
         contentTextView = (TextView) rootView.findViewById(R.id.textview_content);
         titleTextView = (TextView) rootView.findViewById(R.id.textview_title);
         imageView = (ImageView) rootView.findViewById(R.id.imageview_image);
+
         setHasOptionsMenu(true);
 
         return rootView;

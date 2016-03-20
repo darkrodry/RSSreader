@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GetNews {
 
-    void execute(Callback callback);
+    void execute(Callback callback, String url);
 
     interface Callback {
 

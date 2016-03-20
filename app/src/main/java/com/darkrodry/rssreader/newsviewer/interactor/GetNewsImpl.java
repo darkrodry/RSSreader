@@ -19,8 +19,9 @@ public class GetNewsImpl implements GetNews {
     }
 
     @Override
-    public void execute(final Callback callback) {
+    public void execute(final Callback callback, String url) {
         this.callback = callback;
+        rssNewsRepository.setUrl(url);
 
         new Thread(new Runnable() {
             @Override
