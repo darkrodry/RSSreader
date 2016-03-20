@@ -3,6 +3,7 @@ package com.darkrodry.rssreader.news.repository;
 import android.text.Html;
 
 import com.darkrodry.rssreader.news.model.NewsItem;
+import com.darkrodry.rssreader.utils.NetworkUtils;
 import com.einmalfel.earl.EarlParser;
 import com.einmalfel.earl.Feed;
 import com.einmalfel.earl.Item;
@@ -18,6 +19,15 @@ import java.util.zip.DataFormatException;
 
 public class RSSNewsRepository implements NewsRepository {
 
+    private static RSSNewsRepository singleton = new RSSNewsRepository();
+
+    public static RSSNewsRepository getInstance() {
+        return singleton;
+    }
+
+    private RSSNewsRepository() {
+    }
+
     private String url;
 
     public void setUrl(String url) {
@@ -26,25 +36,25 @@ public class RSSNewsRepository implements NewsRepository {
     
     @Override
     public List<NewsItem> getNewsItems() {
-        ArrayList<NewsItem> newsItemsList = new ArrayList<>();
+        if (NetworkUtils.isOnline()) {
+            ArrayList<NewsItem> newsItemsList = new ArrayList<>();
 
-        try {
-            InputStream inputStream = new URL(url).openConnection().getInputStream();
+            try {
+                InputStream inputStream = new URL(url).openConnection().getInputStream();
 
-            Feed feed = EarlParser.parseOrThrow(inputStream, 0);
-            for (Item item : feed.getItems()) {
-                newsItemsList.add(getNewsItemFromRSSItem(item));
+                Feed feed = EarlParser.parseOrThrow(inputStream, 0);
+                for (Item item : feed.getItems()) {
+                    newsItemsList.add(getNewsItemFromRSSItem(item));
+                }
+
+            } catch (IOException | DataFormatException | XmlPullParserException e) {
+                e.printStackTrace();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DataFormatException e) {
-            e.printStackTrace();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
+            return newsItemsList;
+        } else {
+            return DatabaseNewsRepository.getInstance().getNewsItems();
         }
-        
-        return newsItemsList;
     }
 
     private NewsItem getNewsItemFromRSSItem(Item rssItem) {

@@ -1,7 +1,6 @@
 package com.darkrodry.rssreader.newsviewer.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -35,7 +34,9 @@ public class NewsListFragment extends Fragment implements NewsListPresenter.View
 
     public NewsListFragment() {
         presenter = new NewsListPresenter(this,
-                new GetNewsImpl(new RSSNewsRepository(), new MainThreadImpl(new Handler())));
+                new GetNewsImpl(RSSNewsRepository.getInstance(),
+                        new MainThreadImpl(new Handler()),
+                        getContext()));
     }
 
     @Override
